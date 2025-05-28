@@ -1,0 +1,41 @@
+{
+    "recommended": [
+      {
+        "area": "Desenvolvimento",
+        "vagas": [
+          {
+            "titulo": "Desenvolvedor Web",
+            "local": "São Paulo, SP",
+            "salario": "R$ 5.000,00",
+            "descricao": "Buscamos um desenvolvedor web com experiência em HTML, CSS e JavaScript."
+          },
+          {
+            "titulo": "Engenheiro de Software",
+            "local": "Porto Alegre, RS",
+            "salario": "R$ 7.000,00",
+            "descricao": "Necessitamos de um engenheiro de software com experiência em arquitetura de sistemas."
+          }
+        ]
+      }
+    ],
+    "other": [
+      {
+        "area": "Marketing",
+        "vagas": [
+          {
+            "titulo": "Analista de Marketing",
+            "local": "Belo Horizonte, MG",
+            "salario": "R$ 4.200,00",
+            "descricao": "Experiência em campanhas de mídias sociais."
+          },
+          {
+            "titulo": "Especialista em SEO",
+            "local": "Campinas, SP",
+            "salario": "R$ 5.500,00",
+            "descricao": "SEO para melhorar presença digital da empresa."
+          }
+        ]
+      }
+    ]
+  }
+  

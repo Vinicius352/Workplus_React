@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../assets/css/TelaCadastro.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function TelaCadastro() {
   const [form, setForm] = useState({
@@ -11,6 +12,8 @@ function TelaCadastro() {
     cpf: '',
     telefone: '',
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,16 +28,9 @@ function TelaCadastro() {
     }
 
     try {
-      await axios.post('http://localhost:3001/usuarios', form);
+      await axios.post('http://localhost:3001/api/cadastro', form);
       alert('Cadastro realizado com sucesso!');
-      setForm({
-        nome: '',
-        email: '',
-        senha: '',
-        confirmarSenha: '',
-        cpf: '',
-        telefone: '',
-      });
+      navigate('/login'); // Redireciona para login
     } catch (err) {
       alert('Erro ao cadastrar. Tente novamente.');
     }

@@ -1,64 +1,87 @@
-.vagas-container {
-  padding: 20px;
-  background-color: #f4f7fb;
+.painel-container {
+  background: #f3f7fc;
   min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.vagas-container h2 {
+.painel-header {
   text-align: center;
+  margin-bottom: 30px;
+}
+
+.painel-header h1 {
+  color: #0077cc;
   font-size: 2rem;
-  margin-bottom: 20px;
-  color: #333;
+  margin-bottom: 8px;
 }
 
-.vagas-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.vaga-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.vaga-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.vaga-card h3 {
-  font-size: 1.5rem;
-  color: #007bff;
-  margin-bottom: 10px;
-}
-
-.vaga-card p {
-  font-size: 1rem;
-  margin: 5px 0;
+.painel-header p {
   color: #555;
 }
 
-.vaga-card p strong {
+.vagas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 10px;
+}
+
+.vaga-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.vaga-card:hover {
+  transform: translateY(-3px);
+}
+
+.vaga-card h2 {
   color: #333;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.vaga-card p {
+  margin: 4px 0;
+  color: #555;
+}
+
+.vaga-card .descricao {
+  font-size: 0.95rem;
+  color: #777;
+  margin-top: 10px;
 }
 
 .btn-candidatar {
-  display: inline-block;
-  padding: 12px 20px;
-  background-color: #28a745;
+  margin-top: 16px;
+  background-color: #0077cc;
   color: white;
   border: none;
+  padding: 10px;
   border-radius: 8px;
-  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 15px;
   transition: background-color 0.3s;
 }
 
 .btn-candidatar:hover {
-  background-color: #218838;
+  background-color: #005fa3;
+}
+
+/* Responsivo */
+@media (max-width: 500px) {
+  .painel-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .vaga-card {
+    padding: 16px;
+  }
 }

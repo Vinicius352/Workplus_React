@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/css/HomeUsuario.css';
+import ModalCurriculo from '../components/ModalCurriculo';
+import Navbar from '../components/Navbar';
 
 function HomeUsuario() {
   const [usuario, setUsuario] = useState(null);
   const [totalVagas, setTotalVagas] = useState(0);
   const [ultimaMensagem, setUltimaMensagem] = useState('');
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [arquivo, setArquivo] = useState(null);
   const navigate = useNavigate();
   const idUsuario = 1; // simulado
 
@@ -25,8 +29,24 @@ function HomeUsuario() {
     setUltimaMensagem('Olá! Temos novas vagas para você 😉');
   }, [navigate]);
 
+  const abrirModal = () => setMostrarModal(true);
+  const fecharModal = () => {
+    setArquivo(null);
+    setMostrarModal(false);
+  };
+
+  const enviarCurriculo = () => {
+    if (!arquivo) {
+      alert('Selecione um arquivo primeiro!');
+      return;
+    }
+    alert(`Currículo "${arquivo.name}" enviado com sucesso!`);
+    fecharModal();
+  };
+
   return (
     <div className="home-usuario-wrapper">
+      <Navbar />
       <header className="home-header">
         <div className="home-user-info">
           <img src="https://i.pravatar.cc/150?img=12" alt="avatar" className="home-avatar" />
@@ -56,7 +76,7 @@ function HomeUsuario() {
         <h2>🔗 Acesso Rápido</h2>
         <div className="home-buttons">
           <button onClick={() => navigate('/painel')}>🔍 Ver Vagas</button>
-          <button onClick={() => navigate('/curriculo')}>📤 Enviar Currículo</button>
+          <button onClick={abrirModal}>📤 Enviar Currículo</button>
           <button onClick={() => navigate('/caixa-de-entrada')}>💬 Mensagens</button>
           <button onClick={() => navigate('/perfil')}>👤 Meu Perfil</button>
         </div>
@@ -65,6 +85,14 @@ function HomeUsuario() {
       <footer className="home-footer">
         <p>© {new Date().getFullYear()} Workplus • Todos os direitos reservados</p>
       </footer>
+
+      <ModalCurriculo
+        isOpen={mostrarModal}
+        onClose={fecharModal}
+        onUpload={enviarCurriculo}
+        file={arquivo}
+        setFile={setArquivo}
+      />
     </div>
   );
 }

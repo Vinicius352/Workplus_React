@@ -1,11 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
   const Usuario = sequelize.define('Usuario', {
-    nome: DataTypes.STRING,
-    email: DataTypes.STRING,
-    senha: DataTypes.STRING,
-    cpf: DataTypes.STRING,
-    telefone: DataTypes.STRING,
-    curriculo: DataTypes.STRING, // novo campo para armazenar o nome do arquivo
+    nome: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+    },
+    senha: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    cpf: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    telefone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    curriculo: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 
   return Usuario;

@@ -5,8 +5,9 @@ const db = require('./models');
 const authRoutes = require('./routes/auth');
 const cadastroRoutes = require('./routes/cadastro');
 const vagasRoutes = require('./routes/vagas');
-const usuarioRoutes = require('./routes/auth.js'); 
+const usuarioRoutes = require('./routes/auth.js');
 const usuariosRoutes = require('./routes/usuariosRoutes');
+const empregadorRoutes = require('./routes/empregadorRoutes'); // 👈 ADICIONE ESTA LINHA
 
 const bcrypt = require('bcrypt');
 
@@ -14,14 +15,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Rotas da API
+// ROTAS
 app.use('/api/login', authRoutes);
 app.use('/api/cadastro', cadastroRoutes);
 app.use('/api/vagas', vagasRoutes);
-app.use('/api/usuario', usuarioRoutes); // ✅ Rota de usuários (GET /usuarios/:id, POST /usuarios)
+app.use('/api/usuario', usuarioRoutes);
 app.use('/api/usuario', usuariosRoutes);
+app.use('/api/empregador', empregadorRoutes); // 👈 REGISTRA A NOVA ROTA
 
-// Popular dados de teste
+// Popular dados iniciais
 async function popularDadosIniciais() {
   const senhaHash = await bcrypt.hash('1234', 10);
 
@@ -55,7 +57,7 @@ async function popularDadosIniciais() {
   console.log('✅ Usuário e vagas de teste inseridos.');
 }
 
-// Sincroniza o banco e inicia o servidor
+// Iniciar servidor
 db.sequelize.sync({ force: true }).then(async () => {
   await popularDadosIniciais();
 

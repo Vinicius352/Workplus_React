@@ -1,13 +1,29 @@
+// models/empregador.js
 module.exports = (sequelize, DataTypes) => {
   const Empregador = sequelize.define('Empregador', {
-    nome: DataTypes.STRING,
-    email: DataTypes.STRING,
-    senha: DataTypes.STRING,
+    nomeEmpresa: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    cnpj: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    senha: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    telefone: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   });
-
-  Empregador.associate = (models) => {
-    Empregador.hasMany(models.Vaga, { foreignKey: 'empregadorId' });
-  };
 
   return Empregador;
 };

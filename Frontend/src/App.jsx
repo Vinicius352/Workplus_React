@@ -9,7 +9,7 @@ import TelaCurriculo from './pages/TelaCurriculo';
 import TelaConversa from './pages/TelaConversa';
 import CaixaDeEntrada from './pages/CaixaDeEntrada';
 import PerfilUsuario from './pages/PerfilUsuario';
-import TelaCadastroEmpregador from './pages/TelaCadastroEmpregador';
+import TelaCadastroEmpregador from './pages/TelaEmpregador';
 
 
 function App() {

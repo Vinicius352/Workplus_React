@@ -4,79 +4,62 @@ import axios from 'axios';
 import '../assets/css/TelaLogin.css';
 
 function TelaLogin() {
-  const [form, setForm] = useState({ email: '', senha: '' });
-  const [tipo, setTipo] = useState('candidato'); // novo estado
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const rota = tipo === 'empregador' ? 'empregador/login' : 'login';
-      const resposta = await axios.post(`http://localhost:3001/api/${rota}`, form);
+      const response = await axios.post('http://localhost:3001/api/login', { email, senha });
 
-      if (resposta.data.success) {
+      if (response.data.success) {
         localStorage.setItem('logado', 'true');
-        localStorage.setItem('tipo', tipo);
-        localStorage.setItem(tipo === 'empregador' ? 'empregadorId' : 'usuarioId', resposta.data.usuario.id);
+        localStorage.setItem('tipoUsuario', response.data.tipo); // 'usuario' ou 'empregador'
+        localStorage.setItem(
+          response.data.tipo === 'usuario' ? 'usuarioId' : 'empregadorId',
+          response.data.id
+        );
 
-        alert('✅ Login realizado com sucesso!');
-        navigate(tipo === 'empregador' ? '/painel-empregador' : '/home');
+        if (response.data.tipo === 'usuario') {
+          navigate('/home');
+        } else {
+          navigate('/empregador/home');
+        }
+      } else {
+        alert('Credenciais inválidas');
       }
-    } catch (err) {
-      console.error(err);
-      alert('❌ Erro ao fazer login.');
+    } catch (error) {
+      alert('Erro ao realizar login');
     }
   };
 
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
-        <h2>Login Workplus</h2>
-
-        <div className="tipo-selector">
-          <label>
-            <input
-              type="radio"
-              value="candidato"
-              checked={tipo === 'candidato'}
-              onChange={() => setTipo('candidato')}
-            />
-            Sou Candidato
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="empregador"
-              checked={tipo === 'empregador'}
-              onChange={() => setTipo('empregador')}
-            />
-            Sou Empregador
-          </label>
-        </div>
-
+        <h2>Login</h2>
         <input
           type="email"
-          name="email"
-          placeholder="Email"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
-          value={form.email}
-          onChange={handleChange}
         />
         <input
           type="password"
-          name="senha"
           placeholder="Senha"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
           required
-          value={form.senha}
-          onChange={handleChange}
         />
-
         <button type="submit">Entrar</button>
+
+        <div className="login-links">
+          <p>Não tem conta?</p>
+          <button type="button" onClick={() => navigate('/cadastro')}>Sou Candidato</button>
+          <button type="button" onClick={() => navigate('/cadastro-empregador')}>Sou Empregador</button>
+        </div>
       </form>
     </div>
   );

@@ -6,12 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     descricao: DataTypes.TEXT,
     categoria: DataTypes.STRING,
     area: DataTypes.STRING,
-    empregadorId: DataTypes.INTEGER // vínculo com o empregador
+    empregadorId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   });
-
-  Vaga.associate = (models) => {
-    Vaga.belongsTo(models.Empregador, { foreignKey: 'empregadorId' });
-  };
 
   return Vaga;
 };

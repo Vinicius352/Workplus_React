@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #1d3557, #457b9d);
+  color: #fff;
+}
+
+.home-empregador-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.home-empregador-header .info {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.home-empregador-header h1 {
+  font-size: 2.2rem;
+  margin: 0;
+}
+
+.home-empregador-header p {
+  font-size: 1rem;
+  color: #cfdde6;
+}
+
+.home-empregador-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  max-width: 1000px;
+}
+
+.card-box {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 20px;
+  width: 260px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.card-box:hover {
+  transform: translateY(-4px);
+}
+
+.card-box h3 {
+  color: #f1faee;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.card-box p {
+  font-size: 0.95rem;
+  color: #d1e0f0;
+  margin: 8px 0;
+}
+
+.card-box .number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #f1faee;
+}
+
+.card-box button {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background-color: #f1faee;
+  color: #1d3557;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.card-box button:hover {
+  background-color: #a8dadc;
+}
+
+.footer {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #cfdde6;
+}

@@ -7,8 +7,7 @@ const cadastroRoutes = require('./routes/cadastro');
 const vagasRoutes = require('./routes/vagas');
 const usuarioRoutes = require('./routes/auth.js');
 const usuariosRoutes = require('./routes/usuariosRoutes');
-const empregadorRoutes = require('./routes/empregadorRoutes'); // 👈 ADICIONE ESTA LINHA
-const empregadorRoutes = require('./routes/empregador'); // ✅
+const empregadorRoutes = require('./routes/empregador'); // 👈 ADICIONE ESTA LINHA
 
 const bcrypt = require('bcrypt');
 
@@ -23,18 +22,27 @@ app.use('/api/vagas', vagasRoutes);
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/usuario', usuariosRoutes);
 app.use('/api/empregador', empregadorRoutes); // 👈 REGISTRA A NOVA ROTA
-app.use('/api/empregadores', empregadorRoutes); // ✅
+
+
 
 // Popular dados iniciais
 async function popularDadosIniciais() {
   const senhaHash = await bcrypt.hash('1234', 10);
 
-  await db.Usuario.create({
+  const usuario = await db.Usuario.create({
     nome: 'Usuário Teste',
     email: 'teste@email.com',
     senha: senhaHash,
     cpf: '000.000.000-00',
     telefone: '(11) 99999-9999'
+  });
+
+  const empregador = await db.Empregador.create({
+    nomeEmpresa: 'Tech Solutions',
+    email: 'empregador@email.com',
+    senha: senhaHash,
+    cnpj: '12.345.678/0001-99',
+    telefone: '(11) 88888-8888'
   });
 
   await db.Vaga.bulkCreate([
@@ -44,7 +52,8 @@ async function popularDadosIniciais() {
       salario: 'R$ 5.000,00',
       descricao: 'Conhecimento em HTML, CSS e JS.',
       categoria: 'recommended',
-      area: 'Desenvolvimento'
+      area: 'Desenvolvimento',
+      empregadorId: empregador.id  // 👈 associando o empregador
     },
     {
       titulo: 'Analista de Marketing',
@@ -52,12 +61,14 @@ async function popularDadosIniciais() {
       salario: 'R$ 4.200,00',
       descricao: 'Campanhas de mídias sociais.',
       categoria: 'other',
-      area: 'Marketing'
+      area: 'Marketing',
+      empregadorId: empregador.id  // 👈 associando o empregador
     }
   ]);
 
-  console.log('✅ Usuário e vagas de teste inseridos.');
+  console.log('✅ Usuário, empregador e vagas de teste inseridos.');
 }
+
 
 // Iniciar servidor
 db.sequelize.sync({ force: true }).then(async () => {

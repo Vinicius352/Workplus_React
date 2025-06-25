@@ -1,0 +1,57 @@
+.criar-vaga-container {
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+  background: linear-gradient(to right, #1d3557, #457b9d);
+  min-height: 100vh;
+  color: white;
+}
+
+.criar-vaga-form {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.criar-vaga-form h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.8rem;
+  color: #f1faee;
+}
+
+.criar-vaga-form input,
+.criar-vaga-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #f1faee;
+  color: #1d3557;
+}
+
+.criar-vaga-form textarea {
+  resize: vertical;
+}
+
+.criar-vaga-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #f1faee;
+  color: #1d3557;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.criar-vaga-form button:hover {
+  background-color: #a8dadc;
+}

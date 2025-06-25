@@ -1,14 +1,8 @@
-// models/empregador.js
 module.exports = (sequelize, DataTypes) => {
   const Empregador = sequelize.define('Empregador', {
     nomeEmpresa: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    cnpj: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
     },
     email: {
       type: DataTypes.STRING,
@@ -19,9 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    telefone: {
+    cnpj: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
+    },
+    telefone: {
+      type: DataTypes.STRING
     }
   });
 

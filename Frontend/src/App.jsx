@@ -9,7 +9,14 @@ import TelaCurriculo from './pages/TelaCurriculo';
 import TelaConversa from './pages/TelaConversa';
 import CaixaDeEntrada from './pages/CaixaDeEntrada';
 import PerfilUsuario from './pages/PerfilUsuario';
-import TelaCadastroEmpregador from './pages/TelaEmpregador';
+import TelaCadastroEmpregador from './pages/TelaCadastroEmpregador'
+import HomeEmpregador from './pages/HomeEmpregador';
+import CriarVaga from './pages/CriarVaga';
+import MinhasVagas from './pages/MinhasVagasEmpregador';
+
+
+
+
 
 
 function App() {
@@ -26,6 +33,11 @@ function App() {
         <Route path="/perfil" element={<PerfilUsuario />} />
         <Route path="/cadastro" element={<TelaCadastro />} />
         <Route path="/cadastro-empregador" element={<TelaCadastroEmpregador />} />
+        <Route path="/empregador/home" element={<HomeEmpregador />} />
+        <Route path="/criar-vaga" element={<CriarVaga />} />
+        <Route path="/minhas-vagas" element={<MinhasVagas />} />
+
+        
 
         
         {/* Rota aninhada para chat com lista e conversa */}

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const { Usuario } = require('../models');
+const { Usuario, Empregador } = require('../models');
 
 router.post('/', async (req, res) => {
   const { email, senha } = req.body;
@@ -12,19 +12,39 @@ router.post('/', async (req, res) => {
 
   try {
     const usuario = await Usuario.findOne({ where: { email } });
-    if (!usuario) {
-      return res.status(401).json({ error: 'Usuário não encontrado' });
+
+    if (usuario) {
+      const senhaConfere = await bcrypt.compare(senha, usuario.senha);
+      if (!senhaConfere) {
+        return res.status(401).json({ error: 'Senha incorreta' });
+      }
+      return res.json({
+        success: true,
+        message: 'Login realizado com sucesso',
+        tipo: 'usuario',
+        id: usuario.id
+      });
     }
 
-    const senhaConfere = await bcrypt.compare(senha, usuario.senha);
-    if (!senhaConfere) {
-      return res.status(401).json({ error: 'Senha incorreta' });
+    const empregador = await Empregador.findOne({ where: { email } });
+
+    if (empregador) {
+      const senhaConfere = await bcrypt.compare(senha, empregador.senha);
+      if (!senhaConfere) {
+        return res.status(401).json({ error: 'Senha incorreta' });
+      }
+      return res.json({
+        success: true,
+        message: 'Login realizado com sucesso',
+        tipo: 'empregador',
+        id: empregador.id
+      });
     }
 
-    // Login OK
-    res.json({ success: true, message: 'Login realizado com sucesso', usuario });
+    return res.status(401).json({ error: 'Usuário ou empregador não encontrado' });
   } catch (error) {
-    res.status(500).json({ error: 'Erro no servidor' });
+    console.error('Erro no login:', error);
+    res.status(500).json({ error: 'Erro no servidor ao realizar login' });
   }
 });
 

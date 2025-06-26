@@ -1,0 +1,59 @@
+.painel-vagas-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.painel-vagas-container h2 {
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.vaga-card {
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.vaga-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vaga-card h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  color: #1e88e5;
+}
+
+.vaga-card p {
+  margin: 4px 0;
+  color: #555;
+}
+
+.vaga-card strong {
+  color: #333;
+}
+
+.vaga-card button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #1e88e5;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.vaga-card button:hover {
+  background-color: #1565c0;
+}

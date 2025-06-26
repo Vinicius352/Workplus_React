@@ -31,13 +31,13 @@
 }
 
 .mensagem.esquerda {
-  background-color: #e0e0e0;
+  background-color: #05020262;
   align-self: flex-start;
   border-bottom-left-radius: 0;
 }
 
 .mensagem.direita {
-  background-color: #d1e7ff;
+  background-color: #005fa3;
   align-self: flex-end;
   border-bottom-right-radius: 0;
 }

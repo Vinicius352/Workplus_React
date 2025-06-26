@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import '../assets/css/CriarVaga.css';
 
 function CriarVaga() {
@@ -19,19 +20,19 @@ function CriarVaga() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const empregadorId = localStorage.getItem('empregadorId');
-    if (!empregadorId) {
-      alert('⚠️ Empregador não identificado. Faça login novamente.');
-      return;
-    }
-
     try {
-      await axios.post('http://localhost:3001/api/vagas', {
-        ...form,
-        empregadorId: parseInt(empregadorId)
+     await axios.post('http://localhost:3001/api/vagas', {
+  ...form,
+  empregadorId: 1
+});
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Vaga criada com sucesso!',
+        showConfirmButton: false,
+        timer: 2000
       });
 
-      alert('✅ Vaga criada com sucesso!');
       setForm({
         titulo: '',
         local: '',
@@ -42,7 +43,11 @@ function CriarVaga() {
       });
     } catch (err) {
       console.error('Erro ao criar vaga:', err);
-      alert('❌ Erro ao criar vaga.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao criar vaga',
+        text: 'Tente novamente mais tarde.',
+      });
     }
   };
 

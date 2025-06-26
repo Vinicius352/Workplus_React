@@ -49,7 +49,7 @@ function HomeEmpregador() {
         <div className="card-box">
           <h3>🧾 Candidatos</h3>
           <p>Avalie os perfis dos candidatos às suas vagas.</p>
-          <button onClick={() => navigate('/candidatos')}>Ver Candidatos</button>
+          <button onClick={() => navigate()}>Em Breve</button>
         </div>
       </section>
 

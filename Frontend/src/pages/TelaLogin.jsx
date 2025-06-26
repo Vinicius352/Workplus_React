@@ -6,32 +6,38 @@ import '../assets/css/TelaLogin.css';
 function TelaLogin() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [erro, setErro] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErro('');
+    setLoading(true);
 
     try {
       const response = await axios.post('http://localhost:3001/api/login', { email, senha });
 
       if (response.data.success) {
-        localStorage.setItem('logado', 'true');
-        localStorage.setItem('tipoUsuario', response.data.tipo); // 'usuario' ou 'empregador'
-        localStorage.setItem(
-          response.data.tipo === 'usuario' ? 'usuarioId' : 'empregadorId',
-          response.data.id
-        );
+        const { tipo, id } = response.data;
 
-        if (response.data.tipo === 'usuario') {
-          navigate('/home');
+        localStorage.setItem('logado', 'true');
+        localStorage.setItem('tipoUsuario', tipo);
+        if (tipo === 'empregador') {
+          localStorage.setItem('empregadorId', id);
         } else {
-          navigate('/empregador/home');
+          localStorage.setItem('usuarioId', id);
         }
+
+        navigate(tipo === 'empregador' ? '/empregador/home' : '/home');
       } else {
-        alert('Credenciais inválidas');
+        setErro('❌ Credenciais inválidas. Verifique seu e-mail e senha.');
       }
     } catch (error) {
-      alert('Erro ao realizar login');
+      console.error('Erro ao logar:', error);
+      setErro('❌ Erro ao realizar login. Tente novamente mais tarde.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,26 +45,39 @@ function TelaLogin() {
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
         <h2>Login</h2>
+
         <input
           type="email"
           placeholder="E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          disabled={loading}
         />
+
         <input
           type="password"
           placeholder="Senha"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
           required
+          disabled={loading}
         />
-        <button type="submit">Entrar</button>
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Entrando...' : 'Entrar'}
+        </button>
+
+        {erro && <p className="erro-login">{erro}</p>}
 
         <div className="login-links">
           <p>Não tem conta?</p>
-          <button type="button" onClick={() => navigate('/cadastro')}>Sou Candidato</button>
-          <button type="button" onClick={() => navigate('/cadastro-empregador')}>Sou Empregador</button>
+          <button type="button" onClick={() => navigate('/cadastro')} disabled={loading}>
+            Sou Candidato
+          </button>
+          <button type="button" onClick={() => navigate('/cadastro-empregador')} disabled={loading}>
+            Sou Empregador
+          </button>
         </div>
       </form>
     </div>

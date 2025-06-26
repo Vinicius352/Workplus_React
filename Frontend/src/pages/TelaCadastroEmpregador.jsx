@@ -1,6 +1,6 @@
-// src/pages/TelaCadastroEmpregador.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import '../assets/css/TelaCadastroEmpregador.css';
 
 function TelaCadastroEmpregador() {
@@ -18,19 +18,34 @@ function TelaCadastroEmpregador() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const resposta = await axios.post('http://localhost:3001/api/empregador', form);
-      alert('✅ Cadastro de empregador enviado com sucesso!');
-      setForm({
-        nomeEmpresa: '',
-        email: '',
-        senha: '',
-        cnpj: '',
-        telefone: '',
+      const res = await axios.post('http://localhost:3001/api/empregador', form);
+
+      if (res.data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Cadastro realizado!',
+          text: 'Empregador cadastrado com sucesso.',
+          showConfirmButton: false,
+          timer: 2000
+        });
+
+        setForm({
+          nomeEmpresa: '',
+          email: '',
+          senha: '',
+          cnpj: '',
+          telefone: '',
+        });
+      }
+    } catch (err) {
+      console.error('Erro ao cadastrar empregador:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao cadastrar',
+        text: err.response?.data?.error || 'Erro desconhecido. Tente novamente.',
       });
-    } catch (error) {
-      console.error('Erro ao cadastrar empregador:', error);
-      alert('❌ Erro ao cadastrar: ' + (error.response?.data?.error || error.message));
     }
   };
 

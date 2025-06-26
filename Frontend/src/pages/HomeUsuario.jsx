@@ -75,7 +75,7 @@ function HomeUsuario() {
       <section className="home-actions">
         <h2>🔗 Acesso Rápido</h2>
         <div className="home-buttons">
-          <button onClick={() => navigate('/painel')}>🔍 Ver Vagas</button>
+          <button onClick={() => navigate('/painel-vagas')}>🔍 Ver Vagas</button>
           <button onClick={abrirModal}>📤 Enviar Currículo</button>
           <button onClick={() => navigate('/caixa-de-entrada')}>💬 Mensagens</button>
           <button onClick={() => navigate('/perfil')}>👤 Meu Perfil</button>

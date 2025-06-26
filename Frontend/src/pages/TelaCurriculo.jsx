@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import '../assets/css/TelaCurriculo.css';
 
 function TelaCurriculo() {
@@ -8,32 +9,42 @@ function TelaCurriculo() {
   const [curriculoEnviado, setCurriculoEnviado] = useState('');
   const navigate = useNavigate();
 
-  const idUsuario = 1; // Simulação - substitua depois pelo ID real do usuário logado
+  const idUsuario = localStorage.getItem('usuarioId'); // Pega o ID salvo no login
 
   useEffect(() => {
     const estaLogado = localStorage.getItem('logado') === 'true';
     if (!estaLogado) {
-      alert('Você precisa estar logado para enviar o currículo.');
-      navigate('/login');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Acesso negado',
+        text: 'Você precisa estar logado para enviar o currículo',
+      }).then(() => navigate('/login'));
     }
 
-    // Busca o currículo já salvo (se existir)
     axios.get(`http://localhost:3001/api/usuario/usuarios/${idUsuario}`)
       .then(res => {
         if (res.data.curriculo) {
           setCurriculoEnviado(res.data.curriculo);
         }
       })
-      .catch(err => {
-        console.error('Erro ao buscar usuário:', err);
+      .catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao carregar dados',
+          text: 'Não foi possível buscar os dados do currículo.',
+        });
       });
-  }, [navigate]);
+  }, [navigate, idUsuario]);
 
   const handleUpload = async (e) => {
     e.preventDefault();
 
     if (!file) {
-      alert('❌ Por favor, selecione um arquivo.');
+      Swal.fire({
+        icon: 'info',
+        title: 'Selecione um arquivo',
+        text: 'Você precisa escolher um arquivo antes de enviar.',
+      });
       return;
     }
 
@@ -48,11 +59,20 @@ function TelaCurriculo() {
       );
 
       setCurriculoEnviado(res.data.arquivo);
-      alert('✅ Currículo enviado com sucesso!');
+      Swal.fire({
+        icon: 'success',
+        title: 'Currículo enviado com sucesso!',
+        showConfirmButton: false,
+        timer: 2000
+      });
       setFile(null);
     } catch (error) {
       console.error('Erro ao enviar:', error);
-      alert('❌ Erro ao enviar o currículo.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao enviar currículo',
+        text: 'Tente novamente mais tarde.',
+      });
     }
   };
 

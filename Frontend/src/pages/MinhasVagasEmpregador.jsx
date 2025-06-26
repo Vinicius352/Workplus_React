@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import '../assets/css/MinhasVagasEmpregador.css';
 
 function MinhasVagasEmpregador() {
@@ -14,38 +15,73 @@ function MinhasVagasEmpregador() {
     area: ''
   });
 
-  const empregadorId = localStorage.getItem('empregadorId');
+  const empregadorId = 1;
 
   useEffect(() => {
     axios.get(`http://localhost:3001/api/vagas/empregador/${empregadorId}`)
       .then(res => setVagas(res.data))
-      .catch(() => alert('Erro ao buscar suas vagas'));
+      .catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao buscar vagas',
+          text: 'Tente novamente mais tarde.',
+        });
+      });
   }, [empregadorId]);
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Deseja realmente excluir esta vaga?')) return;
+    const confirmacao = await Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você deseja excluir esta vaga?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (!confirmacao.isConfirmed) return;
 
     try {
       await axios.delete(`http://localhost:3001/api/vagas/${id}`);
       setVagas(vagas.filter(v => v.id !== id));
+      Swal.fire({
+        icon: 'success',
+        title: 'Vaga excluída com sucesso',
+        timer: 2000,
+        showConfirmButton: false
+      });
     } catch {
-      alert('Erro ao excluir vaga');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao excluir vaga',
+        text: 'Tente novamente.',
+      });
     }
   };
 
   const handleEdit = (vaga) => {
     setEditando(vaga.id);
-    setForm({ ...vaga });
+    setForm(vaga);
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:3001/api/vagas/${editando}`, form);
-      setVagas(vagas.map(v => (v.id === editando ? { ...v, ...form } : v)));
+      setVagas(vagas.map(v => v.id === editando ? { ...v, ...form } : v));
       setEditando(null);
+      Swal.fire({
+        icon: 'success',
+        title: 'Vaga atualizada com sucesso!',
+        timer: 2000,
+        showConfirmButton: false
+      });
     } catch {
-      alert('Erro ao atualizar vaga');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro ao atualizar vaga',
+        text: 'Verifique os dados e tente novamente.',
+      });
     }
   };
 
@@ -59,12 +95,12 @@ function MinhasVagasEmpregador() {
           <div className="vaga-card" key={vaga.id}>
             {editando === vaga.id ? (
               <form onSubmit={handleUpdate} className="form-editar">
-                <input name="titulo" value={form.titulo} onChange={e => setForm({ ...form, titulo: e.target.value })} />
-                <input name="local" value={form.local} onChange={e => setForm({ ...form, local: e.target.value })} />
-                <input name="salario" value={form.salario} onChange={e => setForm({ ...form, salario: e.target.value })} />
-                <textarea name="descricao" value={form.descricao} onChange={e => setForm({ ...form, descricao: e.target.value })} />
-                <input name="categoria" value={form.categoria} onChange={e => setForm({ ...form, categoria: e.target.value })} />
-                <input name="area" value={form.area} onChange={e => setForm({ ...form, area: e.target.value })} />
+                <input value={form.titulo} onChange={e => setForm({ ...form, titulo: e.target.value })} />
+                <input value={form.local} onChange={e => setForm({ ...form, local: e.target.value })} />
+                <input value={form.salario} onChange={e => setForm({ ...form, salario: e.target.value })} />
+                <textarea value={form.descricao} onChange={e => setForm({ ...form, descricao: e.target.value })} />
+                <input value={form.categoria} onChange={e => setForm({ ...form, categoria: e.target.value })} />
+                <input value={form.area} onChange={e => setForm({ ...form, area: e.target.value })} />
                 <button type="submit">Salvar</button>
                 <button type="button" onClick={() => setEditando(null)}>Cancelar</button>
               </form>

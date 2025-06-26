@@ -9,7 +9,7 @@ function HomeUsuario() {
   const [totalVagas, setTotalVagas] = useState(0);
   const [ultimaMensagem, setUltimaMensagem] = useState('');
   const navigate = useNavigate();
-  const idUsuario = 1; // simulado
+  const idUsuario = 1;
 
   useEffect(() => {
     const logado = localStorage.getItem('logado') === 'true';

@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
 import '../assets/css/ChatBox.css';
 
 function CaixaDeEntrada() {
-  const { id: nomeContato } = useParams();
   const [mensagens, setMensagens] = useState([
-    { texto: `Você iniciou uma conversa com ${nomeContato}`, lado: 'esquerda' },
+    { texto: `Você iniciou uma conversa com Empregador`, lado: 'esquerda' },
   ]);
   const [novaMensagem, setNovaMensagem] = useState('');
   const fimDasMensagens = useRef(null);
@@ -17,7 +15,7 @@ function CaixaDeEntrada() {
     setMensagens((msgs) => [
       ...msgs,
       { texto: novaMensagem, lado: 'direita' },
-      { texto: `Recebido por ${nomeContato} 😉`, lado: 'esquerda' },
+      { texto: `Entrege ao Empregador 😉`, lado: 'esquerda' },
     ]);
     setNovaMensagem('');
   };
@@ -39,7 +37,7 @@ function CaixaDeEntrada() {
       <form className="chat-formulario" onSubmit={enviarMensagem}>
         <input
           type="text"
-          placeholder={`Mensagem para ${nomeContato}...`}
+          placeholder={`Mensagem para o Empregador...`}
           value={novaMensagem}
           onChange={(e) => setNovaMensagem(e.target.value)}
         />

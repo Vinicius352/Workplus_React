@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TelaInicial from './pages/TelaInicial';
 import TelaLogin from './pages/TelaLogin';
 import HomeUsuario from './pages/HomeUsuario';
-import PainelVagas from './pages/PainelVagas';
+import PainelVagas from './pages/PainelVagasEmpregador';
 import TelaCadastro from './pages/TelaCadastro';
 import TelaCurriculo from './pages/TelaCurriculo';
 import TelaConversa from './pages/TelaConversa';
@@ -13,6 +13,8 @@ import TelaCadastroEmpregador from './pages/TelaCadastroEmpregador'
 import HomeEmpregador from './pages/HomeEmpregador';
 import CriarVaga from './pages/CriarVaga';
 import MinhasVagas from './pages/MinhasVagasEmpregador';
+import PainelVagasUsuario from './pages/PainelVagasUsuario';
+
 
 
 
@@ -36,6 +38,8 @@ function App() {
         <Route path="/empregador/home" element={<HomeEmpregador />} />
         <Route path="/criar-vaga" element={<CriarVaga />} />
         <Route path="/minhas-vagas" element={<MinhasVagas />} />
+        <Route path="/painel-vagas" element={<PainelVagasUsuario />} />
+
 
         
 

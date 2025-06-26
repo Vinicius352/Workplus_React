@@ -8,6 +8,8 @@ const vagasRoutes = require('./routes/vagas');
 const usuarioRoutes = require('./routes/auth.js');
 const usuariosRoutes = require('./routes/usuariosRoutes');
 const empregadorRoutes = require('./routes/empregador'); // 👈 ADICIONE ESTA LINHA
+const loginEmpregadorRoutes = require('./routes/loginEmpregador');
+
 
 const bcrypt = require('bcrypt');
 
@@ -21,11 +23,12 @@ app.use('/api/cadastro', cadastroRoutes);
 app.use('/api/vagas', vagasRoutes);
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/usuario', usuariosRoutes);
-app.use('/api/empregador', empregadorRoutes); // 👈 REGISTRA A NOVA ROTA
+app.use('/api/empregador', empregadorRoutes);
+app.use('/api/login/empregador', loginEmpregadorRoutes);
 
 
 
-// Popular dados iniciais
+
 async function popularDadosIniciais() {
   const senhaHash = await bcrypt.hash('1234', 10);
 

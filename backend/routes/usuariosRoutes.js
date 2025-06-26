@@ -30,6 +30,48 @@ router.get('/usuarios/:id', async (req, res) => {
 });
 
 /**
+ * PUT /usuarios/:id
+ * Atualiza os dados do usuário
+ */
+router.put('/usuarios/:id', async (req, res) => {
+  try {
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuário não encontrado' });
+
+    const { nome, email, cpf, telefone } = req.body;
+
+    usuario.nome = nome ?? usuario.nome;
+    usuario.email = email ?? usuario.email;
+    usuario.cpf = cpf ?? usuario.cpf;
+    usuario.telefone = telefone ?? usuario.telefone;
+
+    await usuario.save();
+
+    res.json({ success: true, message: 'Perfil atualizado com sucesso!' });
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error);
+    res.status(500).json({ error: 'Erro ao atualizar perfil' });
+  }
+});
+
+/**
+ * DELETE /usuarios/:id
+ * Remove o usuário
+ */
+router.delete('/usuarios/:id', async (req, res) => {
+  try {
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) return res.status(404).json({ error: 'Usuário não encontrado' });
+
+    await usuario.destroy();
+    res.json({ success: true, message: 'Conta excluída com sucesso' });
+  } catch (error) {
+    console.error('Erro ao excluir usuário:', error);
+    res.status(500).json({ error: 'Erro ao excluir conta' });
+  }
+});
+
+/**
  * POST /usuarios/:id/curriculo
  * Atualiza o campo "curriculo" do usuário com o nome do arquivo enviado
  */
@@ -49,13 +91,13 @@ router.post('/usuarios/:id/curriculo', upload.single('curriculo'), async (req, r
 });
 
 /**
- * (Opcional) GET /usuarios
+ * GET /usuarios
  * Lista todos os usuários
  */
 router.get('/usuarios', async (req, res) => {
   try {
     const usuarios = await Usuario.findAll({
-      attributes: { exclude: ['senha'] } // evita enviar senhas
+      attributes: { exclude: ['senha'] }
     });
     res.json(usuarios);
   } catch (error) {
@@ -64,4 +106,3 @@ router.get('/usuarios', async (req, res) => {
 });
 
 module.exports = router;
-

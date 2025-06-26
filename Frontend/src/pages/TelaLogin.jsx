@@ -44,7 +44,7 @@ function TelaLogin() {
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
-        <h2>Login</h2>
+        <h2>Workplus - Login</h2>
 
         <input
           type="email"
